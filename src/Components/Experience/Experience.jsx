@@ -65,30 +65,7 @@ const experiences = [
       " Designed responsive UI with Tailwind & Figma",
     ],
   },
-  {
-    name: "Freelance Projects",
-    icon: <FaGithub size={60} className="text-white" />,
-    title: "Full Stack Developer",
-    duration: "2023 – Present",
-    details: [
-      " Built SwiftCard e-commerce site with cart & auth",
-      " Developed React apps (URL shortener, currency converter)",
-      " Used Firebase for login & real-time storage",
-      " Designed responsive UI with Tailwind & Figma",
-    ],
-  },
-  {
-    name: "Freelance Projects",
-    icon: <FaGithub size={60} className="text-white" />,
-    title: "Full Stack Developer",
-    duration: "2023 – Present",
-    details: [
-      " Built SwiftCard e-commerce site with cart & auth",
-      " Developed React apps (URL shortener, currency converter)",
-      " Used Firebase for login & real-time storage",
-      " Designed responsive UI with Tailwind & Figma",
-    ],
-  },
+  
 ];
 
 // Variants for list items fade in

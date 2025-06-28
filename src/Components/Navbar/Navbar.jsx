@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { RiCloseLine, RiMenu2Line } from "@remixicon/react";
 
-const Navbar = () => {
+const Navbar = ({ handleContactClick }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
   const handleLinkClick = () => setMenuOpen(false);
+
+  const handleClick = (item) => {
+    if (item === "Contact") {
+      handleContactClick(); // call footer scroll function
+    } else {
+      const section = document.getElementById(item);
+      if (section) section.scrollIntoView({ behavior: "smooth" });
+    }
+    setMenuOpen(false); // close menu after click
+  };
 
   return (
     <nav className="relative bg-transparent px-6 md:px-20 py-6 flex items-center justify-between text-white shadow-md">
@@ -14,17 +24,13 @@ const Navbar = () => {
         Portfolio
       </span>
 
-      {/* Hamburger Menu Icon */}
+      {/* Hamburger Menu */}
       <button
         onClick={handleMenuToggle}
         aria-label={menuOpen ? "Close menu" : "Open menu"}
         className="md:hidden z-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
-        {menuOpen ? (
-          <RiCloseLine size={32} />
-        ) : (
-          <RiMenu2Line size={32} />
-        )}
+        {menuOpen ? <RiCloseLine size={32} /> : <RiMenu2Line size={32} />}
       </button>
 
       {/* Menu Items */}
@@ -33,22 +39,19 @@ const Navbar = () => {
           fixed top-0 left-0 w-full h-screen bg-black bg-opacity-90 backdrop-blur-md
           flex flex-col items-center justify-center gap-10 text-xl font-semibold
           transform transition-transform duration-300 md:static md:flex-row md:gap-8 md:bg-transparent md:h-auto md:w-auto md:translate-y-0
-          ${
-            menuOpen ? "translate-y-0" : "-translate-y-full"
-          }
+          ${menuOpen ? "translate-y-0" : "-translate-y-full"}
           md:translate-y-0
         `}
       >
         {["About", "Experience", "Projects", "Contact"].map((item) => (
           <li key={item}>
-            <a
-              href={`#${item === "Contact" ? "Footer" : item}`}
-              className="hover:text-indigo-400 transition-colors duration-300"
-              onClick={handleLinkClick}
+            <button
+              onClick={() => handleClick(item)}
+              className="hover:text-indigo-400 transition-colors duration-300 focus:outline-none"
               tabIndex={menuOpen || window.innerWidth >= 768 ? 0 : -1}
             >
               {item}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
