@@ -1,56 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiCloseLine, RiMenu2Line } from "@remixicon/react";
 
-const Navbar = ({ handleContactClick }) => {
+const navItems = ["Home", "About", "Skills", "Experience", "Projects", "Contact"];
+
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("Home");
 
   const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
-  const handleLinkClick = () => setMenuOpen(false);
-
   const handleClick = (item) => {
-    if (item === "Contact") {
-      handleContactClick(); // call footer scroll function
-    } else {
-      const section = document.getElementById(item);
-      if (section) section.scrollIntoView({ behavior: "smooth" });
+    const sectionId = item.toLowerCase();
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(item);
     }
-    setMenuOpen(false); // close menu after click
+    setMenuOpen(false);
   };
 
+  // Active section detection on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map((item) => ({
+        id: item,
+        top: document.getElementById(item.toLowerCase())?.offsetTop || 0,
+      }));
+
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (scrollPosition >= sections[i].top) {
+          setActiveSection(sections[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="relative bg-transparent px-6 md:px-20 py-6 flex items-center justify-between text-white shadow-md">
-      <span className="text-2xl font-bold tracking-wide cursor-default select-none">
+    <nav className="fixed top-0 left-0 w-full bg-black bg-opacity-70 backdrop-blur-md z-50 px-6 md:px-20 py-4 flex items-center justify-between text-white shadow-lg">
+      <span className="text-2xl font-extrabold tracking-wide cursor-pointer select-none text-indigo-400">
         Portfolio
       </span>
 
-      {/* Hamburger Menu */}
+      {/* Hamburger */}
       <button
         onClick={handleMenuToggle}
         aria-label={menuOpen ? "Close menu" : "Open menu"}
-        className="md:hidden z-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="md:hidden z-[60] focus:outline-none"
       >
         {menuOpen ? <RiCloseLine size={32} /> : <RiMenu2Line size={32} />}
       </button>
 
-      {/* Menu Items */}
+      {/* Nav Items */}
       <ul
         className={`
-          fixed top-0 left-0 w-full h-screen bg-black bg-opacity-90 backdrop-blur-md
-          flex flex-col items-center justify-center gap-10 text-xl font-semibold
-          transform transition-transform duration-300 md:static md:flex-row md:gap-8 md:bg-transparent md:h-auto md:w-auto md:translate-y-0
-          ${menuOpen ? "translate-y-0" : "-translate-y-full"}
-          md:translate-y-0
+          fixed top-0 left-0 w-full h-screen bg-black bg-opacity-90 backdrop-blur-lg flex flex-col items-center justify-center
+          gap-10 text-xl font-semibold transform transition-transform duration-300 md:static md:flex-row md:gap-8 md:bg-transparent md:h-auto md:w-auto
+          ${menuOpen ? "translate-y-0" : "-translate-y-full"} md:translate-y-0
         `}
       >
-        {["About", "Experience", "Projects", "Contact"].map((item) => (
+        {navItems.map((item) => (
           <li key={item}>
             <button
               onClick={() => handleClick(item)}
-              className="hover:text-indigo-400 transition-colors duration-300 focus:outline-none"
+              className={`relative group transition-all duration-300 ease-in-out
+                ${activeSection === item ? "text-indigo-400" : "text-white"}
+                hover:text-indigo-400 focus:outline-none`}
               tabIndex={menuOpen || window.innerWidth >= 768 ? 0 : -1}
             >
-              {item}
+              <span className="relative px-2 py-1">
+                {item}
+                <span
+                  className={`absolute left-0 -bottom-1 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500
+                  ${activeSection === item ? "w-full" : "w-0 group-hover:w-full"}`}
+                />
+              </span>
             </button>
           </li>
         ))}

@@ -1,28 +1,35 @@
 import React from "react";
+import { FaExternalLinkAlt, FaCode } from "react-icons/fa";
 
 const ProjectCard = ({ title, main, demoLink, codeLink, image }) => {
   return (
-    <div>
-      <img
-  src={image}
-  alt={`${title} banner`}
-  className={`rounded-xl mb-4 w-full shadow-md ${
-    title === "To-Do Reminder App"
-      ? "h-40 md:h-60 object-contain"
-      : "h-60 object-cover"
-  }`}
-      />
-      <h3 className="text-xl font-bold text-indigo-300 mb-2">{title}</h3>
-      <p className="text-gray-300 text-sm leading-relaxed mb-4">{main}</p>
-      <div className="flex gap-4">
+    <div className="bg-glassDark backdrop-blur-md rounded-2xl p-6 flex flex-col h-full shadow-indigo-glow transition-transform duration-300 hover:scale-[1.04] cursor-pointer">
+      {/* Image Section */}
+      <div className="overflow-hidden rounded-xl mb-5 h-48 md:h-60">
+        <img
+          src={image}
+          alt={`${title} banner`}
+          className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Title */}
+      <h3 className="text-xl font-extrabold text-indigo-400 mb-3">{title}</h3>
+
+      {/* Description */}
+      <p className="text-gray-300 text-sm leading-relaxed flex-grow">{main}</p>
+
+      {/* Buttons */}
+      <div className="mt-6 flex gap-4 justify-center md:justify-start">
         {demoLink && (
           <a
             href={demoLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 text-white text-sm px-4 py-2 rounded-full font-semibold shadow-md"
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full font-semibold shadow-lg transition-colors duration-300"
           >
-            Demo
+            Demo <FaExternalLinkAlt size={14} />
           </a>
         )}
         {codeLink && (
@@ -30,9 +37,9 @@ const ProjectCard = ({ title, main, demoLink, codeLink, image }) => {
             href={codeLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-zinc-700 hover:bg-zinc-600 transition-all duration-300 text-white text-sm px-4 py-2 rounded-full font-semibold shadow-md"
+            className="flex items-center gap-2 bg-zinc-700 hover:bg-zinc-600 text-white px-5 py-2 rounded-full font-semibold shadow-lg transition-colors duration-300"
           >
-            Source Code
+            Code <FaCode size={14} />
           </a>
         )}
       </div>

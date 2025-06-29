@@ -8,46 +8,50 @@ const aboutItems = [
     title: "Frontend Developer",
     description:
       "I build modern, responsive UIs using React.js, Tailwind CSS, and JavaScript. I focus on clean, scalable, and accessible design systems.",
-    icon: <FaReact size={28} className="text-cyan-400" />,
+    icon: <FaReact size={22} />,
+    iconColor: "text-cyan-300",
   },
   {
     title: "Backend & Firebase",
     description:
       "Experienced in creating backend services using Node.js and Firebase — including authentication, Firestore, and cloud functions.",
-    icon: <FaNodeJs size={28} className="text-green-400" />,
+    icon: <FaNodeJs size={22} />,
+    iconColor: "text-green-300",
   },
   {
     title: "Android Developer",
     description:
       "I develop Android apps using Kotlin and Java, with hands-on experience in API integration and performance optimization.",
-    icon: <FaAndroid size={28} className="text-lime-400" />,
+    icon: <FaAndroid size={22} />,
+    iconColor: "text-lime-300",
   },
   {
     title: "UI/UX & Project Builder",
     description:
       "From wireframing in Figma to complete product development, I enjoy crafting full-stack applications with seamless user experience.",
-    icon: <FaFigma size={28} className="text-pink-400" />,
+    icon: <FaFigma size={22} />,
+    iconColor: "text-pink-300",
   },
 ];
 
 const About = () => {
   return (
     <section
-      id="About"
-      className="text-white bg-gradient-to-br from-[#0f0f0f] to-[#1a1a1a] py-20 px-6 md:px-24 rounded-xl shadow-2xl"
+      id="about"
+      className="bg-gradient-to-br from-[#0d0d0d] to-[#1b1b1b] text-white py-20 px-6 md:px-24 relative"
     >
-      {/* Animated Heading */}
+      {/* Heading */}
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-4 relative w-fit mx-auto after:block after:mt-2 after:h-[3px] after:w-24 after:bg-indigo-500 after:mx-auto after:rounded-full"
+        className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-8 relative mx-auto w-fit after:block after:mt-2 after:h-[3px] after:w-24 after:bg-indigo-500 after:mx-auto after:rounded-full"
       >
         About Me
       </motion.h2>
 
-      {/* Introduction */}
+      {/* Intro Text */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -59,46 +63,51 @@ const About = () => {
           Hi, I'm <span className="text-indigo-400 font-semibold">Amit Gupta</span>, a developer passionate about building meaningful digital experiences.
         </p>
         <p>
-          Currently pursuing my <span className="text-white font-medium">B.Tech in CSE</span> at <span className="text-white font-medium">Galgotias University</span>, I specialize in building responsive websites and mobile apps with clean code and great UX.
+          I'm currently pursuing <span className="text-white font-medium">B.Tech in CSE</span> at <span className="text-white font-medium">Galgotias University</span>, and I love building responsive websites & mobile apps with clean code and a great UX.
         </p>
         <p>
           <strong className="text-white">📍 Address:</strong> Greater Noida, Uttar Pradesh, India
         </p>
       </motion.div>
 
-      {/* Skill Timeline */}
-      <div className="relative border-l-2 border-indigo-500 pl-6 space-y-10 max-w-4xl mx-auto">
-        {aboutItems.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.15, duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Tilt
-              glareEnable={true}
-              glareMaxOpacity={0.2}
-              scale={1.02}
-              transitionSpeed={800}
-              tiltMaxAngleX={8}
-              tiltMaxAngleY={8}
-              className="bg-[#1f1f1f] hover:bg-[#2a2a2a] transition-all duration-300 p-6 rounded-xl shadow-lg relative group"
-            >
-              {/* Pulse dot */}
-              <div className="absolute -left-3 top-6 w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10">
-                {item.icon}
-              </div>
+      {/* Timeline with Icons */}
+      <div className="relative max-w-4xl mx-auto pl-6">
+        {/* Vertical Line */}
+        <div className="absolute top-0 left-4 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-indigo-300 rounded-full" />
 
-              <h4 className="text-xl font-semibold mb-2 flex items-center gap-2 text-white">
-                {item.title}
-              </h4>
-              <p className="text-gray-400 group-hover:text-gray-200 text-sm leading-relaxed">
-                {item.description}
-              </p>
-            </Tilt>
-          </motion.div>
-        ))}
+        <div className="space-y-16">
+          {aboutItems.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.2, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="relative pl-12"
+            >
+              <Tilt
+                tiltMaxAngleX={6}
+                tiltMaxAngleY={6}
+                transitionSpeed={800}
+                glareEnable={true}
+                glareMaxOpacity={0.1}
+                className="bg-[#1e1e1e]/70 backdrop-blur-md hover:bg-[#282828]/80 transition-all duration-300 p-6 rounded-xl shadow-xl"
+              >
+                {/* Icon Circle */}
+                <div className="absolute left-[-1.6rem] top-4 w-10 h-10 rounded-full bg-[#1f1f1f] border-2 border-indigo-400 flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+                  <span className={`text-xl ${item.iconColor}`}>{item.icon}</span>
+                </div>
+
+                <h4 className="text-xl font-semibold mb-2 text-white">
+                  {item.title}
+                </h4>
+                <p className="text-gray-400 group-hover:text-gray-200 text-sm leading-relaxed">
+                  {item.description}
+                </p>
+              </Tilt>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

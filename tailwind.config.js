@@ -14,6 +14,7 @@ export default {
         darkBg2: "#1F2937",
         grayLight: "#D1D5DB",
         grayDark: "#374151",
+        glassDark: "rgba(31, 31, 31, 0.6)", // for glassmorphism
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
@@ -38,6 +39,7 @@ export default {
       },
       boxShadow: {
         "indigo-glow": "0 0 15px 3px rgba(99, 102, 241, 0.5)",
+        glow: "0 0 10px rgba(99, 102, 241, 0.6)", // soft glow
       },
     },
   },

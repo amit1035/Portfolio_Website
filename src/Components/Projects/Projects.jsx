@@ -2,13 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 
-// Animation variant similar to Experience cards
 const projectVariants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 40 },
   visible: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.2, duration: 0.6 },
+    transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" },
   }),
 };
 
@@ -53,15 +52,14 @@ const projectList = [
 const Projects = () => {
   return (
     <section
-      id="Projects"
+      id="projects"
       className="bg-gradient-to-br from-black via-[#0f0f1d] to-black text-white py-20 px-6 md:px-24"
     >
-      <h2 className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-16">
+      <h2 className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-16 tracking-wide drop-shadow-lg">
         My Projects
       </h2>
 
-      {/* Grid layout for cards */}
-      <div className="grid gap-10 md:grid-cols-3">
+      <div className="grid gap-12 md:grid-cols-3 sm:grid-cols-2">
         {projectList.map((project, idx) => (
           <motion.div
             key={idx}
@@ -70,8 +68,7 @@ const Projects = () => {
             whileInView="visible"
             viewport={{ once: true }}
             custom={idx}
-            className="bg-zinc-950 hover:bg-zinc-900 rounded-xl p-6 transition-all duration-300 shadow-xl hover:shadow-2xl border border-zinc-700 hover:border-indigo-400 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
+            className="rounded-3xl"
           >
             <ProjectCard {...project} />
           </motion.div>

@@ -12,43 +12,49 @@ const TextChange = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [displayText, setDisplayText] = useState("");
+  const [fadeClass, setFadeClass] = useState("opacity-100");
+
+  const current = texts[textIndex];
 
   useEffect(() => {
-    const currentTextObj = texts[textIndex];
-    const typingSpeed = isDeleting ? 40 : 120;
+    const typingSpeed = isDeleting ? 40 : 100;
     let timeout;
 
-    if (!isDeleting && charIndex === currentTextObj.text.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 1500);
+    if (!isDeleting && charIndex === current.text.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 1200);
     } else if (isDeleting && charIndex === 0) {
       setIsDeleting(false);
       setTextIndex((prev) => (prev + 1) % texts.length);
     } else {
       timeout = setTimeout(() => {
-        const nextCharIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-        setCharIndex(nextCharIndex);
-        setDisplayText(currentTextObj.text.substring(0, nextCharIndex));
+        const nextIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+        setCharIndex(nextIndex);
+        setDisplayText(current.text.substring(0, nextIndex));
       }, typingSpeed);
     }
 
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, textIndex]);
 
+  // Fade effect when switching texts
   useEffect(() => {
-    setCharIndex(0);
+    setFadeClass("opacity-0");
+    const fadeTimeout = setTimeout(() => {
+      setFadeClass("opacity-100");
+    }, 150);
+    return () => clearTimeout(fadeTimeout);
   }, [textIndex]);
-
-  const currentColor = texts[textIndex].color;
 
   return (
     <span
       className={classNames(
-        "font-bold text-3xl md:text-5xl transition-colors duration-500 ease-in-out",
-        currentColor
+        "font-bold text-3xl md:text-5xl transition-all duration-500 ease-in-out",
+        current.color,
+        fadeClass
       )}
     >
       {displayText}
-      <span className="border-r-2 border-white ml-1 animate-blink" />
+      <span className="ml-1 border-r-2 border-white animate-blink" />
     </span>
   );
 };
