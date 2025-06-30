@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RiCloseLine, RiMenu2Line } from "@remixicon/react";
 
-const navItems = ["Home", "About", "Skills", "Experience", "Projects", "Contact"];
+const navItems = ["Home", "About", "Skills", "Achievements","Experience", "Projects", "Contact"];
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

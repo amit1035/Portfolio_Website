@@ -1,61 +1,64 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import classNames from "classnames";
 
 const TextChange = () => {
   const texts = [
     { text: "Hi, I'm Amit Gupta", color: "text-indigo-400" },
-    { text: "Frontend Developer", color: "text-pink-400" },
-    { text: "Android Developer", color: "text-green-400" },
+    { text: "Frontend Developer", color: "text-purple-400" },
+    { text: "Android Developer", color: "text-pink-400" },
   ];
 
-  const [textIndex, setTextIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [displayText, setDisplayText] = useState("");
-  const [fadeClass, setFadeClass] = useState("opacity-100");
-
-  const current = texts[textIndex];
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState("typing");
+  const [displayed, setDisplayed] = useState("");
 
   useEffect(() => {
-    const typingSpeed = isDeleting ? 40 : 100;
-    let timeout;
-
-    if (!isDeleting && charIndex === current.text.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 1200);
-    } else if (isDeleting && charIndex === 0) {
-      setIsDeleting(false);
-      setTextIndex((prev) => (prev + 1) % texts.length);
-    } else {
-      timeout = setTimeout(() => {
-        const nextIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-        setCharIndex(nextIndex);
-        setDisplayText(current.text.substring(0, nextIndex));
-      }, typingSpeed);
+    if (phase === "typing") {
+      if (displayed.length < texts[index].text.length) {
+        const timeout = setTimeout(() => {
+          setDisplayed(texts[index].text.slice(0, displayed.length + 1));
+        }, 70);
+        return () => clearTimeout(timeout);
+      } else {
+        const pause = setTimeout(() => setPhase("deleting"), 1500);
+        return () => clearTimeout(pause);
+      }
     }
 
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, textIndex]);
-
-  // Fade effect when switching texts
-  useEffect(() => {
-    setFadeClass("opacity-0");
-    const fadeTimeout = setTimeout(() => {
-      setFadeClass("opacity-100");
-    }, 150);
-    return () => clearTimeout(fadeTimeout);
-  }, [textIndex]);
+    if (phase === "deleting") {
+      if (displayed.length > 0) {
+        const timeout = setTimeout(() => {
+          setDisplayed(displayed.slice(0, -1));
+        }, 35);
+        return () => clearTimeout(timeout);
+      } else {
+        const next = (index + 1) % texts.length;
+        setIndex(next);
+        setPhase("typing");
+      }
+    }
+  }, [displayed, phase, index, texts]);
 
   return (
-    <span
-      className={classNames(
-        "font-bold text-3xl md:text-5xl transition-all duration-500 ease-in-out",
-        current.color,
-        fadeClass
-      )}
-    >
-      {displayText}
-      <span className="ml-1 border-r-2 border-white animate-blink" />
-    </span>
+    <div className="min-h-[3.5rem] md:min-h-[4.5rem]">
+      <AnimatePresence mode="wait">
+        <motion.h2
+          key={index}
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 30, opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className={classNames(
+            "font-extrabold text-3xl md:text-5xl tracking-tight relative inline-block",
+            texts[index].color
+          )}
+        >
+          {displayed}
+          <span className="ml-1 border-r-2 border-white animate-blink" />
+        </motion.h2>
+      </AnimatePresence>
+    </div>
   );
 };
 

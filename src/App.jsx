@@ -7,6 +7,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import Projects from "./Components/Projects/Projects";
 import Skills from "./Components/About/Skills";
 import Contact from "./Components/Footer/Contact";
+import Achievements from "./Components/About/Achievements";
 
 function App() {
   const footerRef = useRef(null);
@@ -21,6 +22,7 @@ function App() {
       <Home onContactClick={handleContactClick} />
       <About />
       <Skills />
+      <Achievements />
       <Experience />
       <Projects />
        <Contact />
