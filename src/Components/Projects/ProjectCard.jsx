@@ -6,12 +6,18 @@ const ProjectCard = ({ title, main, demoLink, codeLink, image }) => {
     <div className="bg-glassDark backdrop-blur-md rounded-2xl p-6 flex flex-col h-full shadow-indigo-glow transition-transform duration-300 hover:scale-[1.04] cursor-pointer">
       {/* Image Section */}
       <div className="overflow-hidden rounded-xl mb-5 h-48 md:h-60">
-        <img
-          src={image}
-          alt={`${title} banner`}
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110"
-          loading="lazy"
-        />
+  <img
+  src={image}
+  alt={`${title} banner`}
+  className={`w-full h-full ${
+    title === "AI Voice Assistant"
+      ? "object-cover object-[center_15%] p-1 rounded-md"
+      : "object-cover"
+  } transition-transform duration-500 ease-in-out hover:scale-110`}
+  loading="lazy"
+/>
+
+
       </div>
 
       {/* Title */}

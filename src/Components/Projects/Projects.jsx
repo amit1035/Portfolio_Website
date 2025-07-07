@@ -1,6 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
+import EcommerceImg from "../../assets/Ecommerce.png";
+import CurrencyImg from "../../assets/currecny.png";
+import LoginImg from "../../assets/login.png";
+import TodoImg from "../../assets/todoApp.png";
+import LandingImg from "../../assets/landing.png";
+import ai from "../../assets/img.png"
+
 
 const projectVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -13,39 +20,47 @@ const projectVariants = {
 
 const projectList = [
   {
+  title: "AI Voice Assistant",
+  main: "A voice-enabled AI assistant that can listen, respond, and perform tasks like answering questions or reading content aloud. Built with JavaScript and integrated speech recognition.",
+  demoLink: "https://amit1035.github.io/ai-assistant", 
+  codeLink: "https://github.com/amit1035/ai-assistant", 
+  image: ai, 
+},
+
+  {
     title: "SwiftCard (E-Commerce)",
     main: "A full-featured e-commerce platform with real-time cart updates, user authentication, and secure payments using React, Firebase, and Context API.",
     demoLink: "https://github.com/amit1035/Ecommerce_Website",
     codeLink: "https://github.com/amit1035/Ecommerce_Website",
-    image: "/src/assets/Ecommerce.png",
+    image: EcommerceImg, 
   },
   {
     title: "Currency Converter",
     main: "Convert currencies instantly using a live exchange rate API. Responsive UI with light/dark mode toggle for better UX.",
     demoLink: "https://amit1035.github.io/Currency_Converter",
     codeLink: "https://github.com/amit1035/Currency_Converter",
-    image: "/src/assets/currecny.png",
+    image: CurrencyImg,
   },
   {
     title: "Flutter OTP Auth System",
     main: "A mobile-first OTP authentication system built in Flutter using Firebase Auth. Clean design and robust verification logic.",
     demoLink: "https://github.com/amit1035/flutter_mobile_auth",
     codeLink: "https://github.com/amit1035/flutter_mobile_auth",
-    image: "/src/assets/login.png",
+    image: LoginImg,
   },
   {
     title: "To-Do Reminder App",
     main: "Task management app that lets users add, edit, and receive reminders for tasks. Features local storage and a clean UI.",
     demoLink: "https://amit1035.github.io/project-todo-reminder",
     codeLink: "https://github.com/amit1035/project-todo-reminder",
-    image: "/src/assets/todoApp.png",
+    image: TodoImg,
   },
   {
     title: "Landing Page",
     main: "A modern, responsive landing page template built with HTML, CSS, and JavaScript. Ideal for startups or personal portfolios.",
     demoLink: "https://amit1035.github.io/landingPage",
     codeLink: "https://github.com/amit1035/landingPage",
-    image: "/src/assets/landing.png",
+    image: LandingImg,
   },
 ];
 
