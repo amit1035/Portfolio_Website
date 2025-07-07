@@ -23,7 +23,7 @@ const projectList = [
   title: "AI Voice Assistant",
   main: "A voice-enabled AI assistant that can listen, respond, and perform tasks like answering questions or reading content aloud. Built with JavaScript and integrated speech recognition.",
   demoLink: "https://amit1035.github.io/ai-assistant", 
-  codeLink: "https://github.com/amit1035/ai-assistant", 
+  codeLink: "https://github.com/amit1035/zia-ai-assistant", 
   image: ai, 
 },
 
