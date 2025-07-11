@@ -89,7 +89,7 @@ const Home = () => {
             <FaLinkedin />
           </a>
           <a
-            href="https://twitter.com/AMITGUPTA62594"
+            href="https://x.com/AMITGUPTA625940"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition duration-300 hover:scale-110"
