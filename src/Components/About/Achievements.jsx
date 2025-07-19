@@ -1,52 +1,58 @@
-import React from "react";
-import Tilt from "react-parallax-tilt";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FaTrophy,
-  FaMedal,
-  FaCertificate,
-  FaExternalLinkAlt,
-} from "react-icons/fa";
+import { FaTrophy, FaMedal, FaCertificate, FaExternalLinkAlt } from "react-icons/fa";
 
 const achievements = [
   {
     title: "TATA Crucible Campus Quiz 2024",
     description:
       "Participated in India's largest campus business quiz organized by the Tata Group.",
-    icon: <FaTrophy className="text-yellow-400 text-3xl" title="Quiz Achievement" />,
-    link: "https://drive.google.com/file/d/1RETSq9-Mvp9SrQiar9dLGbwEslaSXdqZ/view?usp=sharing", 
+    icon: <FaTrophy />,
+    link: "https://drive.google.com/file/d/1RETSq9-Mvp9SrQiar9dLGbwEslaSXdqZ/view?usp=sharing",
+    color: "from-yellow-400 to-yellow-600",
+    iconColor: "text-yellow-400",
   },
   {
     title: "AI-ML Virtual Internship",
     description:
       "Completed 6-week internship at Edunet Foundation through IBM SkillsBuild.",
-    icon: <FaCertificate className="text-green-400 text-3xl" title="Internship Certificate" />,
-    link: "https://drive.google.com/file/d/1ZEZ5Lp3NRre8OLTmxjCwjw2jlCzUwPiC/view?usp=sharing", 
+    icon: <FaCertificate />,
+    link: "https://drive.google.com/file/d/1ZEZ5Lp3NRre8OLTmxjCwjw2jlCzUwPiC/view?usp=sharing",
+    color: "from-green-400 to-green-600",
+    iconColor: "text-green-400",
   },
   {
     title: "Cyber Security & Data Science",
     description:
       "Certified by Infosys Springboard in Cyber Security and Introduction to Data Science.",
-    icon: <FaCertificate className="text-blue-400 text-3xl" title="Infosys Certificates" />,
+    icon: <FaCertificate />,
     link: "https://drive.google.com/file/d/1Q-2arYlbegDH1VDw5Q4sKk_qVS_wVpOD/view?usp=sharing",
+    color: "from-blue-400 to-blue-600",
+    iconColor: "text-blue-400",
   },
   {
     title: "Competitive Programming",
     description:
       "Active participant on HackerRank & CodeChef to improve problem-solving skills.",
-    icon: <FaMedal className="text-orange-400 text-3xl" title="Coding Practice" />,
+    icon: <FaMedal />,
     link: "https://www.hackerrank.com/amitguptak20",
+    color: "from-orange-400 to-orange-600",
+    iconColor: "text-orange-400",
   },
   {
     title: "BuildWithIndia Participant",
     description:
       "🚀 Participated in BuildWithIndia, celebrating innovation and tech talent across the nation.",
-    icon: <FaTrophy className="text-yellow-400 text-3xl" />,
+    icon: <FaTrophy />,
     link: "https://drive.google.com/file/d/1DGp8qHAvgy_Co9B8tT23QfFoSkP_RMMM/view?usp=sharing",
+    color: "from-pink-400 to-pink-600",
+    iconColor: "text-pink-400",
   },
 ];
 
 const Achievements = () => {
+  const [active, setActive] = useState(null);
+
   return (
     <section
       id="achievements"
@@ -56,68 +62,87 @@ const Achievements = () => {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-12"
+        className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-16"
       >
         Achievements
       </motion.h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-6xl mx-auto">
-        {achievements.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <Tilt
-              glareEnable={true}
-              glareMaxOpacity={0.15}
-              tiltMaxAngleX={6}
-              tiltMaxAngleY={6}
-              scale={1.02}
-              className="group relative bg-[#1e293b] hover:bg-[#2a364b] p-6 rounded-xl shadow-xl transition-all duration-300 hover:shadow-indigo-500/30 overflow-hidden"
-            >
-              {/* Animated Border Glow on Hover */}
-              <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-indigo-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all duration-300 pointer-events-none" />
+      <div className="relative max-w-5xl mx-auto">
+        {/* Central gradient timeline line */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 via-indigo-700 to-indigo-900 opacity-50 rounded-full animate-pulse" />
 
-              <div className="flex gap-4 items-start relative z-10">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="mt-1 group-hover:scale-110 transition-all duration-300"
+        {achievements.map((item, idx) => {
+          const isLeft = idx % 2 === 0;
+          const isActive = active === idx;
+
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              className={`relative mb-12 flex ${
+                isLeft ? "justify-start" : "justify-end"
+              }`}
+            >
+              <div className="relative w-full sm:w-1/2 px-4">
+                {/* Dot pulse */}
+                <div
+                  className={`absolute ${
+                    isLeft ? "left-[-10px]" : "right-[-10px]"
+                  } top-3 w-5 h-5 bg-indigo-500 rounded-full animate-ping opacity-40`}
+                ></div>
+
+                <div
+                  className={`absolute ${
+                    isLeft ? "left-[-10px]" : "right-[-10px]"
+                  } top-3 w-4 h-4 bg-indigo-600 rounded-full z-10`}
+                ></div>
+
+                {/* Card */}
+                <div
+                  onClick={() => setActive(isActive ? null : idx)}
+                  className={`relative group bg-[#1f2937] p-6 rounded-2xl shadow-xl border-l-4 hover:shadow-indigo-500/30 cursor-pointer hover:scale-[1.02] transition-transform duration-300 border-indigo-500 ${
+                    isActive ? "ring-2 ring-indigo-500" : ""
+                  }`}
                 >
-                  {item.icon}
-                </motion.div>
-                <div className="flex-1">
-                  <motion.h3
-                    whileHover={{ scale: 1.1, color: "#6366F1" }}
-                    className="text-lg font-semibold mb-1 text-white transition-all duration-300"
-                  >
-                    {item.title}
-                  </motion.h3>
-                  <motion.p
-                    className="text-gray-300 text-sm mb-4 group-hover:text-gray-100 transition-all duration-300"
-                  >
-                    {item.description}
-                  </motion.p>
-                  {item.link && (
-                    <motion.a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-full text-white transition-all duration-200 hover:scale-105 transform group-hover:scale-110"
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`text-3xl ${item.iconColor} group-hover:scale-110 transition-transform duration-300`}
                     >
-                      View Certificate <FaExternalLinkAlt size={14} />
-                    </motion.a>
+                      {item.icon}
+                    </div>
+                    <h3 className="text-lg font-bold group-hover:text-indigo-400 transition-colors">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  {isActive && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-4"
+                    >
+                      <p className="text-gray-300 mb-4">{item.description}</p>
+                      {item.link && (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-medium bg-gradient-to-r px-5 py-2 rounded-full text-white shadow-lg hover:scale-105 transition-all duration-300 from-indigo-500 to-indigo-700"
+                        >
+                          View Certificate <FaExternalLinkAlt size={14} />
+                        </a>
+                      )}
+                    </motion.div>
                   )}
                 </div>
               </div>
-            </Tilt>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );

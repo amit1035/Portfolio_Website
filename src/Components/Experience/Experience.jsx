@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaReact, FaGithub, FaTrophy, FaCertificate } from "react-icons/fa";
 import { SiAndroid } from "react-icons/si";
-import { motion } from "framer-motion";
 
 const experiences = [
   {
     name: "VAS Ventures Pvt. Ltd.",
-    icon: <SiAndroid size={50} className="text-green-400" />,
+    icon: <SiAndroid size={30} className="text-green-400" />,
     title: "Android Developer Intern",
     duration: "Sep 2024 – Present",
     details: [
@@ -18,7 +18,7 @@ const experiences = [
   },
   {
     name: "Edunet Foundation (IBM SkillsBuild)",
-    icon: <FaReact size={50} className="text-sky-400" />,
+    icon: <FaReact size={30} className="text-sky-400" />,
     title: "AI/ML Virtual Intern",
     duration: "Jul 2024 – Aug 2024",
     details: [
@@ -30,7 +30,7 @@ const experiences = [
   },
   {
     name: "Freelance Developer",
-    icon: <FaGithub size={50} className="text-white" />,
+    icon: <FaGithub size={30} className="text-white" />,
     title: "Full Stack Developer",
     duration: "2023 – Present",
     details: [
@@ -42,7 +42,7 @@ const experiences = [
   },
   {
     name: "BuildWithIndia Challenge",
-    icon: <FaTrophy size={50} className="text-yellow-400" />,
+    icon: <FaTrophy size={30} className="text-yellow-400" />,
     title: "Participant",
     duration: "2024",
     details: [
@@ -54,7 +54,7 @@ const experiences = [
   },
   {
     name: "Infosys Springboard",
-    icon: <FaCertificate size={50} className="text-indigo-400" />,
+    icon: <FaCertificate size={30} className="text-indigo-400" />,
     title: "Cyber Security & Data Science",
     duration: "2024",
     details: [
@@ -66,99 +66,85 @@ const experiences = [
   },
 ];
 
-const listItemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: (i) => ({
-    opacity: 1,
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
     y: 0,
-    transition: { delay: i * 0.12 },
-  }),
+    transition: { staggerChildren: 0.15 }
+  }
 };
 
-const Experience = () => {
-  const [expandedIndexes, setExpandedIndexes] = useState([]);
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0 },
+};
 
-  const toggleDetails = (index) => {
-    setExpandedIndexes((prev) => {
-      if (prev.includes(index)) {
-        return prev.filter((item) => item !== index);
-      } else {
-        return [...prev, index];
-      }
-    });
-  };
+export default function Experience() {
+  const [activeIndex, setActiveIndex] = useState(null);
 
   return (
     <section
       id="experience"
-      className="py-20 px-6 md:px-24 bg-gradient-to-br from-[#0d0d0d] via-[#121212] to-[#1a1a1a] text-white"
+      className="max-w-7xl mx-auto px-6 py-16 text-white rounded-lg"
     >
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-16 relative w-fit mx-auto after:block after:mt-3 after:h-[3px] after:w-24 after:bg-indigo-500 after:mx-auto after:rounded-full"
-      >
+      <h2 className="text-5xl font-bold text-indigo-400 mb-16 text-center relative w-fit mx-auto after:block after:mt-3 after:h-1 after:w-20 after:bg-indigo-500 after:rounded-full">
         My Experience
-      </motion.h2>
+      </h2>
 
-      <div className="grid gap-12 md:grid-cols-3">
-        {experiences.map((exp, idx) => (
-          <motion.div
-            key={idx}
-            className="relative bg-[#1b1b1b]/80 backdrop-blur-md border border-indigo-500/20 hover:border-indigo-400 transition-all duration-300 rounded-2xl p-6 pt-8 shadow-lg hover:scale-105 hover:shadow-lg hover:bg-[#2a2a2a]"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: idx * 0.2 }}
-          >
-            <div className="absolute -top-6 left-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-3 rounded-full shadow-md hover:scale-110 transition-all duration-300">
-              {exp.icon}
-            </div>
-
-            <div className="pl-1 mt-6">
-              <h3 className="text-xl font-semibold text-indigo-400">{exp.title}</h3>
-              <p className="text-gray-300 text-sm">{exp.name}</p>
-              <p className="text-gray-500 text-xs">{exp.duration}</p>
-            </div>
-
-            <div
-              className={`mt-4 text-gray-300 text-sm space-y-3 pl-6 transition-all duration-300 ${
-                expandedIndexes.includes(idx) ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-              }`}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {experiences.map((exp, idx) => {
+          const isOpen = activeIndex === idx;
+          return (
+            <motion.div
+              key={idx}
+              variants={itemVariants}
+              className={`rounded-2xl shadow-lg p-6 cursor-pointer
+                hover:scale-[1.04] hover:shadow-indigo-glow transition-transform duration-300 select-none`}
+              onClick={() => setActiveIndex(isOpen ? null : idx)}
+              aria-expanded={isOpen}
+              aria-controls={`exp-details-${idx}`}
             >
-              <h4 className="text-indigo-400 font-semibold text-lg">Key Responsibilities:</h4>
-              {exp.details.map((point, i) => (
-                <motion.div
-                  key={i}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="space-y-2"
-                  variants={listItemVariants}
-                >
-                  <div className="flex items-start space-x-2">
-                    {/* Normal Bullet Point with color */}
-                    <div className="w-1.5 h-1.5 rounded-full bg-white mt-1" />
-                    <motion.p>{point}</motion.p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+              <div className="flex items-center space-x-5 mb-4">
+                <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 p-3 rounded-full shadow-lg flex items-center justify-center">
+                  {exp.icon}
+                </div>
+                <div>
+                  <h3 className="text-lg font-extrabold text-indigo-500">{exp.name}</h3>
+                  <h4 className="text-md font-semibold text-gray-300">{exp.title}</h4>
+                  <p className="text-sm italic text-gray-400">{exp.duration}</p>
+                </div>
+              </div>
 
-            {/* Toggle Button */}
-            <button
-              onClick={() => toggleDetails(idx)}
-              className="mt-4 text-indigo-400 hover:text-indigo-300 text-sm"
-            >
-              {expandedIndexes.includes(idx) ? "Show Less" : "Show More"}
-            </button>
-          </motion.div>
-        ))}
-      </div>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.ul
+                    id={`exp-details-${idx}`}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.35 }}
+                    className="text-gray-300 text-sm space-y-2 pl-6 list-disc"
+                  >
+                    {exp.details.map((detail, i) => (
+                      <li key={i}>{detail}</li>
+                    ))}
+                  </motion.ul>
+                )}
+              </AnimatePresence>
+
+              <div className="mt-4 text-indigo-400 font-semibold text-right select-none">
+                {isOpen ? "Show Less ▲" : "Show More ▼"}
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
     </section>
   );
-};
-
-export default Experience;
+}

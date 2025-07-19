@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+
   theme: {
     extend: {
       colors: {
@@ -14,7 +15,7 @@ export default {
         darkBg2: "#1F2937",
         grayLight: "#D1D5DB",
         grayDark: "#374151",
-        glassDark: "rgba(31, 31, 31, 0.6)", // for glassmorphism
+        glassDark: "rgba(31, 31, 31, 0.6)", // glassmorphism bg
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
