@@ -14,7 +14,7 @@ import { BsCode, BsPerson, BsTrophy } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 const glowEffect = {
-  boxShadow: "0 0 15px #8b5cf6",
+  boxShadow: "0 0 20px #8b5cf6",
   scale: 1.05,
   transition: { type: "spring", stiffness: 300, damping: 20 },
 };

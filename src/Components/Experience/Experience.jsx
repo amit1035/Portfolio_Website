@@ -1,150 +1,189 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaReact, FaGithub, FaTrophy, FaCertificate } from "react-icons/fa";
+import {
+  FaReact,
+  FaGithub,
+  FaTrophy,
+  FaCertificate,
+} from "react-icons/fa";
 import { SiAndroid } from "react-icons/si";
+
+// Tech stack colors
+const stackColors = {
+  Kotlin: "bg-[#7F52FF]",
+  "Android Studio": "bg-[#3DDC84]",
+  "Jetpack": "bg-[#1F1F1F]",
+  React: "bg-[#61DAFB]",
+  "Scikit-learn": "bg-[#F7931E]",
+  Python: "bg-[#3776AB]",
+  Firebase: "bg-[#FFCA28]",
+  Tailwind: "bg-[#38BDF8]",
+  Figma: "bg-[#F24E1E]",
+  "Cyber Security": "bg-[#7F7F7F]",
+  "Data Science": "bg-[#7FBB60]",
+  HTML: "bg-[#E34F26]",
+  CSS: "bg-[#264DE4]",
+  JS: "bg-[#F7DF1E]",
+};
 
 const experiences = [
   {
     name: "VAS Ventures Pvt. Ltd.",
-    icon: <SiAndroid size={30} className="text-green-400" />,
+    icon: <SiAndroid className="text-green-400" />,
     title: "Android Developer Intern",
     duration: "Sep 2024 – Present",
     details: [
       "Developed Android apps using Kotlin and XML layouts",
-      "Integrated RESTful APIs to display user and product data",
-      "Worked with JSON parsing and handled runtime permissions",
-      "Built responsive UIs and managed navigation stack using Jetpack components",
+      "Integrated RESTful APIs for dynamic data",
+      "Handled JSON parsing and runtime permissions",
+      "Used Jetpack for navigation and UI management",
     ],
+    stack: ["Kotlin", "Android Studio", "Jetpack", "REST API"],
   },
   {
     name: "Edunet Foundation (IBM SkillsBuild)",
-    icon: <FaReact size={30} className="text-sky-400" />,
+    icon: <FaReact className="text-sky-400" />,
     title: "AI/ML Virtual Intern",
     duration: "Jul 2024 – Aug 2024",
     details: [
-      "Completed restaurant review sentiment analysis using Python",
-      "Performed data preprocessing and trained ML models using Scikit-learn",
-      "Visualized ML report through React-based dashboard",
-      "Received IBM SkillsBuild certificate on successful completion",
+      "Built sentiment analysis model using Python",
+      "Used Scikit-learn, Pandas, and Matplotlib",
+      "Created dashboard using React",
+      "Earned IBM certificate on completion",
     ],
+    stack: ["Python", "Scikit-learn", "React", "Pandas"],
   },
   {
     name: "Freelance Developer",
-    icon: <FaGithub size={30} className="text-white" />,
+    icon: <FaGithub className="text-white" />,
     title: "Full Stack Developer",
     duration: "2023 – Present",
     details: [
-      "Created SwiftCard e-commerce site with product cart, coupons, and Firebase login",
-      "Built responsive websites like Currency Converter, Login UI, and URL Shortener",
-      "Used Firebase for real-time database and email authentication",
-      "Designed using Tailwind CSS, Figma, and React Router",
+      "Built SwiftCard e-commerce app with Firebase auth",
+      "Developed apps like Currency Converter, URL Shortener",
+      "Used Tailwind, React Router, and Figma for design",
     ],
+    stack: ["React", "Firebase", "Tailwind", "Figma"],
   },
   {
     name: "BuildWithIndia Challenge",
-    icon: <FaTrophy size={30} className="text-yellow-400" />,
+    icon: <FaTrophy className="text-yellow-400" />,
     title: "Participant",
     duration: "2024",
     details: [
-      "Participated in a national-level innovation and problem-solving competition",
-      "Worked on scalable web ideas that impact the local ecosystem",
-      "Enhanced collaborative and debugging skills through peer sessions",
-      "Earned certificate of participation for completing the challenge",
+      "Participated in national innovation challenge",
+      "Developed scalable solution for social impact",
+      "Earned certificate of participation",
     ],
+    stack: ["HTML", "CSS", "JS"],
   },
   {
     name: "Infosys Springboard",
-    icon: <FaCertificate size={30} className="text-indigo-400" />,
+    icon: <FaCertificate className="text-indigo-400" />,
     title: "Cyber Security & Data Science",
     duration: "2024",
     details: [
-      "Completed foundational courses on Cyber Security and Introduction to Data Science",
-      "Learned concepts like encryption, firewalls, classification algorithms",
-      "Practiced case studies and assessments in simulated environments",
-      "Earned official certificates from Infosys Springboard platform",
+      "Completed foundational cybersecurity & data science",
+      "Worked on encryption, firewalls, ML concepts",
+      "Earned certificates via assessments & projects",
     ],
+    stack: ["Cyber Security", "Data Science", "Springboard"],
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { staggerChildren: 0.15 }
-  }
-};
-
 const itemVariants = {
-  hidden: { opacity: 0, y: 15 },
+  hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 };
 
-export default function Experience() {
+export default function ExperienceTimeline() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   return (
     <section
       id="experience"
-      className="max-w-7xl mx-auto px-6 py-16 text-white rounded-lg"
+      className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white py-20 px-6 md:px-24"
     >
-      <h2 className="text-5xl font-bold text-indigo-400 mb-16 text-center relative w-fit mx-auto after:block after:mt-3 after:h-1 after:w-20 after:bg-indigo-500 after:rounded-full">
+      <h2 className="text-4xl md:text-5xl font-bold text-center text-indigo-400 mb-16">
         My Experience
       </h2>
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="relative border-l-4 border-indigo-500 pl-6 space-y-14 max-w-4xl mx-auto">
         {experiences.map((exp, idx) => {
           const isOpen = activeIndex === idx;
+
           return (
             <motion.div
               key={idx}
               variants={itemVariants}
-              className={`rounded-2xl shadow-lg p-6 cursor-pointer
-                hover:scale-[1.04] hover:shadow-indigo-glow transition-transform duration-300 select-none`}
-              onClick={() => setActiveIndex(isOpen ? null : idx)}
-              aria-expanded={isOpen}
-              aria-controls={`exp-details-${idx}`}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="relative"
             >
-              <div className="flex items-center space-x-5 mb-4">
-                <div className="bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 p-3 rounded-full shadow-lg flex items-center justify-center">
-                  {exp.icon}
-                </div>
-                <div>
-                  <h3 className="text-lg font-extrabold text-indigo-500">{exp.name}</h3>
-                  <h4 className="text-md font-semibold text-gray-300">{exp.title}</h4>
-                  <p className="text-sm italic text-gray-400">{exp.duration}</p>
-                </div>
+              {/* Timeline Dot */}
+              <div className="absolute -left-[33px] top-3 w-9 h-9 rounded-full bg-[#1e293b] border-4 border-indigo-500 flex items-center justify-center shadow-md">
+                {exp.icon}
               </div>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.ul
-                    id={`exp-details-${idx}`}
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.35 }}
-                    className="text-gray-300 text-sm space-y-2 pl-6 list-disc"
-                  >
-                    {exp.details.map((detail, i) => (
-                      <li key={i}>{detail}</li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
+              {/* Card */}
+              <div
+                onClick={() => setActiveIndex(isOpen ? null : idx)}
+                className={`bg-white/10 backdrop-blur-md rounded-xl px-6 py-5 border border-indigo-700 transition duration-300 hover:shadow-xl cursor-pointer ${
+                  isOpen ? "ring-2 ring-indigo-400 scale-[1.01]" : ""
+                }`}
+              >
+                <div>
+                  <h3 className="text-lg font-bold text-indigo-300">
+                    {exp.name}
+                  </h3>
+                  <p className="text-sm text-gray-200">{exp.title}</p>
+                  <p className="text-xs text-gray-400 italic">{exp.duration}</p>
+                </div>
 
-              <div className="mt-4 text-indigo-400 font-semibold text-right select-none">
-                {isOpen ? "Show Less ▲" : "Show More ▼"}
+                {/* Stack Badges */}
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {exp.stack.map((tech, i) => (
+                    <motion.span
+                      key={i}
+                      className={`${
+                        stackColors[tech] || "bg-gray-500"
+                      } text-white px-3 py-1 text-xs rounded-full border border-indigo-500 
+                      hover:scale-105 hover:opacity-80 transition-all duration-300`}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+
+                {/* Details */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.ul
+                      key="details"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-gray-200 text-sm list-disc pl-5 mt-4 space-y-2"
+                    >
+                      {exp.details.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+
+                <div className="mt-4 text-right text-sm text-indigo-400 select-none">
+                  {isOpen ? "Show Less ▲" : "Show More ▼"}
+                </div>
               </div>
             </motion.div>
           );
         })}
-      </motion.div>
+      </div>
     </section>
   );
 }

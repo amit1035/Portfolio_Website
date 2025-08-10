@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaTrophy, FaMedal, FaCertificate, FaExternalLinkAlt } from "react-icons/fa";
 
 const achievements = [
@@ -51,7 +51,7 @@ const achievements = [
 ];
 
 const Achievements = () => {
-  const [active, setActive] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   return (
     <section
@@ -68,76 +68,63 @@ const Achievements = () => {
       </motion.h2>
 
       <div className="relative max-w-5xl mx-auto">
-        {/* Central gradient timeline line */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 via-indigo-700 to-indigo-900 opacity-50 rounded-full animate-pulse" />
+        <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 via-indigo-700 to-indigo-900 opacity-30 rounded-full" />
 
         {achievements.map((item, idx) => {
           const isLeft = idx % 2 === 0;
-          const isActive = active === idx;
+          const isActive = activeIndex === idx;
 
           return (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
-              className={`relative mb-12 flex ${
-                isLeft ? "justify-start" : "justify-end"
-              }`}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
+              className={`relative mb-12 flex ${isLeft ? "justify-start" : "justify-end"}`}
             >
               <div className="relative w-full sm:w-1/2 px-4">
-                {/* Dot pulse */}
-                <div
-                  className={`absolute ${
-                    isLeft ? "left-[-10px]" : "right-[-10px]"
-                  } top-3 w-5 h-5 bg-indigo-500 rounded-full animate-ping opacity-40`}
-                ></div>
-
-                <div
-                  className={`absolute ${
-                    isLeft ? "left-[-10px]" : "right-[-10px]"
-                  } top-3 w-4 h-4 bg-indigo-600 rounded-full z-10`}
-                ></div>
+                {/* Timeline Dots */}
+                <span
+                  className={`absolute top-4 ${
+                    isLeft ? "-left-3.5" : "-right-3.5"
+                  } w-5 h-5 rounded-full bg-indigo-600 ring-4 ring-indigo-300 z-10`}
+                ></span>
 
                 {/* Card */}
                 <div
-                  onClick={() => setActive(isActive ? null : idx)}
-                  className={`relative group bg-[#1f2937] p-6 rounded-2xl shadow-xl border-l-4 hover:shadow-indigo-500/30 cursor-pointer hover:scale-[1.02] transition-transform duration-300 border-indigo-500 ${
-                    isActive ? "ring-2 ring-indigo-500" : ""
+                  onClick={() => setActiveIndex(isActive ? null : idx)}
+                  className={`bg-[#1f2937] p-6 rounded-xl border-l-4 border-indigo-500 hover:shadow-xl hover:shadow-indigo-500/30 transition duration-300 cursor-pointer ${
+                    isActive ? "ring-2 ring-indigo-400 scale-105" : ""
                   }`}
                 >
-                  <div className="flex items-center gap-4">
-                    <div
-                      className={`text-3xl ${item.iconColor} group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      {item.icon}
-                    </div>
-                    <h3 className="text-lg font-bold group-hover:text-indigo-400 transition-colors">
-                      {item.title}
-                    </h3>
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className={`text-3xl ${item.iconColor}`}>{item.icon}</div>
+                    <h3 className="text-xl font-semibold">{item.title}</h3>
                   </div>
 
-                  {isActive && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mt-4"
-                    >
-                      <p className="text-gray-300 mb-4">{item.description}</p>
-                      {item.link && (
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium bg-gradient-to-r px-5 py-2 rounded-full text-white shadow-lg hover:scale-105 transition-all duration-300 from-indigo-500 to-indigo-700"
-                        >
-                          View Certificate <FaExternalLinkAlt size={14} />
-                        </a>
-                      )}
-                    </motion.div>
-                  )}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        key="desc"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <p className="text-gray-300 mb-4">{item.description}</p>
+                        {item.link && (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center gap-2 text-sm font-medium px-5 py-2 rounded-full shadow-md bg-gradient-to-r ${item.color} text-white hover:scale-105 transition-transform`}
+                          >
+                            View Certificate <FaExternalLinkAlt size={14} />
+                          </a>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             </motion.div>
